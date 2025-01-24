@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from models import Shop, Category, Person, Product, Parameter, ProductInfo, ProductParameter, Contact, Order, OrderItem, ConfirmEmailToken
 
@@ -14,8 +15,15 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Person)
-class PersonAdmin(admin.ModelAdmin):
-    pass
+class CustomUserAdmin(UserAdmin):
+    model = Person
+
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+    list_display = ('email', 'first_name', 'last_name')
 
 
 @admin.register(Product)
@@ -35,11 +43,11 @@ class ProductParameterAdmin(admin.ModelAdmin):
 
 @admin.register(ConfirmEmailToken)
 class ConfirmEmailTokenAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'key', 'created_at',)
 
 
 @admin.register(ProductInfo)
-class ProductInfoTokenAdmin(admin.ModelAdmin):
+class ProductInfoAdmin(admin.ModelAdmin):
     pass
 
 
