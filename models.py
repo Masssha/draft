@@ -56,6 +56,7 @@ class UserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    first_name = models.CharField(_('first name'), max_length=30, blank=False)
     date_of_birth = models.DateField(verbose_name="Birthday",null=True)
     company = models.CharField(max_length=40, blank=True)
     position = models.CharField(max_length=40, blank=True)
